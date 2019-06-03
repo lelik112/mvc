@@ -8,6 +8,7 @@
 
 <h2>${message!}</h2>
 
-<a href="/mvc/upload">Upload files</a>
+<a href="/mvc/upload">Upload files</a><br>
+<a href="/mvc/logout">Logout</a>
 </body>
 </html>
