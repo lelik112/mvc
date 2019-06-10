@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PdfController {
 
-	@RequestMapping(value = "/users", headers = {"accept=application/pdf"})
+	@RequestMapping(value = "/secured/users", headers = {"accept=application/pdf"})
 	public String handleUsers(@RequestHeader String[] accept, Model model) {
 		model.addAttribute("acceptHeader", accept);
 		return "viewUsersPdf";
 	}
 
-	@RequestMapping(value = "/events", headers = {"accept=application/pdf"})
+	@RequestMapping(value = "/secured/events", headers = {"accept=application/pdf"})
 	public String handleEvents(HttpServletRequest request, Model model) {
 		model.addAttribute("headerNames", request.getHeaderNames());
 		return "viewEventsPdf";

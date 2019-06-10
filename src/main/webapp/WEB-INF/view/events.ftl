@@ -6,8 +6,8 @@
 <body>
 <#include "header.ftl" />
 <h1>${sentence!}</h1>
-<#list parameters as ticket>
-  <p>${ticket}
+<#list events as event>
+  <a href="/mvc/events/${event.id}/tickets">${event.name}</a><br>
 </#list>
 <p>
 <a href="/mvc">Welcome page</a>

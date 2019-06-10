@@ -16,6 +16,7 @@
 
     <mvc:view-controller path="/" view-name="greeting"/>
 
+
     <import resource="security.xml"/>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

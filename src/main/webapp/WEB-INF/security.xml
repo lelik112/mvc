@@ -9,16 +9,18 @@
 
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/login*" access="permitAll"/>
-        <intercept-url pattern="/events" access="hasRole('ROLE_BOOKING_MANAGER')"/>
-        <intercept-url pattern="/**" access="hasRole('ROLE_RESGISTERED_USER')"/>
+        <intercept-url pattern="/secured" access="hasRole('ROLE_BOOKING_MANAGER')"/>
+        <intercept-url pattern="task3/balance" access="hasRole('ROLE_BOOKING_MANAGER')"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_REGISTERED_USER')"/>
         <csrf disabled="true"/>
         <form-login
                 login-page="/login"
                 default-target-url="/"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
-                password-parameter="password"/>
-        <logout logout-success-url="/login?logout"/>
+                password-parameter="password"
+                authentication-success-handler-ref="successHandler"/>
+        <logout logout-success-url="/login?logout" />
         <remember-me data-source-ref="dataSource" />
     </http>
 
@@ -30,5 +32,7 @@
 
     <beans:bean id="userDetailsServiceImpl" class="net.tcheltsou.springmvclearning.service.UserDetailsServiceImpl"/>
     <beans:bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <beans:bean id="successHandler" class="net.tcheltsou.springmvclearning.web.controller.AuthenticationSuccessWithSessionHandler"/>
+
 
 </beans:beans>

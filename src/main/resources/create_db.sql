@@ -4,6 +4,7 @@ CREATE TABLE `user`
     `id` SERIAL NOT NULL,
     `name` varchar(64) DEFAULT NULL,
     `password` varchar(255) DEFAULT NULL,
+    `amount` DECIMAL(6, 2),
     PRIMARY KEY (`id`)
 );
 CREATE TABLE `role`
@@ -27,3 +28,28 @@ CREATE TABLE `persistent_logins`
     `token` varchar(64) NOT NULL,
     `last_used` TIMESTAMP NOT NULL
 );
+CREATE TABLE `event`
+(
+    `id` SERIAL NOT NULL,
+    `name` varchar(64) NOT NULL,
+    `date` TIMESTAMP NOT NULL,
+    PRIMARY KEY (`id`)
+);
+CREATE TABLE `ticket`
+(
+    `id` SERIAL NOT NULL,
+    `price` DECIMAL(6, 2) NOT NULL,
+    `is_sold` BIT NOT NULL DEFAULT 0,
+    `event_id` int(11),
+    `user_id` int(11),
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_ticket_eventid` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_ticket_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE TABLE `bank`
+(
+    `id` int(11) NOT NULL,
+    `amount` DECIMAL(12, 2),
+    PRIMARY KEY (`id`),
+);
+

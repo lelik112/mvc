@@ -19,7 +19,7 @@ public class UsersPdfView extends AbstractPdfView {
 		Table table = new Table(2);
 		int i = 1;
 		for (String header: (String[]) model.get("acceptHeader")) {
-			table.addCell("User " + i++);
+			table.addCell("UserAccount " + i++);
 			table.addCell(header);
 		}
 		document.add(table);
