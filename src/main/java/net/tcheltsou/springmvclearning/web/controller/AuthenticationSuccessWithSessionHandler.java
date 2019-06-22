@@ -21,8 +21,13 @@ public class AuthenticationSuccessWithSessionHandler extends SimpleUrlAuthentica
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+<<<<<<< HEAD
 		User user = userService.read(request.getParameter("username"));
 		request.getSession().setAttribute("user", user);
+=======
+		UserAccount userAccount = userAccountService.read(request.getParameter("username"));
+		request.getSession().setAttribute("userAccount", userAccount);
+>>>>>>> f03baf797e0d39168265425d162b16fcb479b089
 		if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_BOOKING_MANAGER"))) {
 			request.getSession().setAttribute("bank", bankService.getBank());
 		}
