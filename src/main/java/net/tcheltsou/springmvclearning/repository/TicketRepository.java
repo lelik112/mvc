@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +38,7 @@ public class TicketRepository{
 
 	public void update(Ticket ticket) {
 		jdbcTemplate.update(SQL_UPDATE, ticket.getPrice(), ticket.isSold(),
-				ticket.getUserAccount().getId(), ticket.getId());
+				ticket.getUser().getId(), ticket.getId());
 	}
 
 	public static class TicketRowMapper implements RowMapper<Ticket> {

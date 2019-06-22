@@ -1,9 +1,9 @@
 package net.tcheltsou.springmvclearning.web.controller;
 
-import net.tcheltsou.springmvclearning.entity.UserAccount;
+import net.tcheltsou.springmvclearning.entity.User;
 import net.tcheltsou.springmvclearning.service.BankService;
 import net.tcheltsou.springmvclearning.service.EventService;
-import net.tcheltsou.springmvclearning.service.UserAccountService;
+import net.tcheltsou.springmvclearning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,7 @@ public class EventsController {
 	private EventService eventService;
 
 	@Autowired
-	private UserAccountService userAccountService;
+	private UserService userService;
 
 	@Autowired
 	private BankService bankService;
@@ -43,8 +43,8 @@ public class EventsController {
 
 	@GetMapping("/{eventId}/ticket/{id}")
 	public String handlBuyTicket(Model model, @PathVariable Long eventId, @PathVariable Long id,
-								 @SessionAttribute UserAccount userAccount, HttpSession session) {
-		model.addAttribute("ticket", userAccountService.buyTicket(id, userAccount));
+								 @SessionAttribute User user, HttpSession session) {
+		model.addAttribute("ticket", userService.buyTicket(id, user));
 		model.addAttribute("sentence", "You have bought ticket. Choose another one:");
 		model.addAttribute("event", eventService.getEventWithAvailableTicketsByEventId(eventId));
 		if (session.getAttribute("bank") != null) {

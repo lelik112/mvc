@@ -1,10 +1,8 @@
 package net.tcheltsou.springmvclearning.web.controller;
 
-import net.tcheltsou.springmvclearning.entity.UserAccount;
-import net.tcheltsou.springmvclearning.repository.BankRepository;
-import net.tcheltsou.springmvclearning.repository.UserAccountRepository;
+import net.tcheltsou.springmvclearning.entity.User;
 import net.tcheltsou.springmvclearning.service.BankService;
-import net.tcheltsou.springmvclearning.service.UserAccountService;
+import net.tcheltsou.springmvclearning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,20 +15,17 @@ import java.io.IOException;
 
 public class AuthenticationSuccessWithSessionHandler extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
-	private UserAccountService userAccountService;
+	private UserService userService;
 	@Autowired
 	private BankService bankService;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-		UserAccount userAccount = userAccountService.read(request.getParameter("username"));
-		request.getSession().setAttribute("userAccount", userAccount);
-		System.out.println(authentication.getAuthorities());
-		System.out.println(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_BOOKING_MANAGER")));
+		User user = userService.read(request.getParameter("username"));
+		request.getSession().setAttribute("user", user);
 		if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_BOOKING_MANAGER"))) {
 			request.getSession().setAttribute("bank", bankService.getBank());
 		}
-		System.out.println(authentication.getAuthorities());
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 

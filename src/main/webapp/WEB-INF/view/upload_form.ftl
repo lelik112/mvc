@@ -11,7 +11,7 @@
     <input type='file' name='file1'>
     <input type='file' name='file2'>
     <br>
-    <input type='radio' name='entity' value='userAccount' checked>User<br>
+    <input type='radio' name='entity' value='user' checked>User<br>
     <input type='radio' name='entity' value='event'>Event<br>
     <input type='SUBMIT'>
 </form>

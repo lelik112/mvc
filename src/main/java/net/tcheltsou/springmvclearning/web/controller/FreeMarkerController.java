@@ -14,21 +14,21 @@ import java.util.Arrays;
 @Controller
 public class FreeMarkerController {
 
-	@RequestMapping("/userAccount/{id}")
+	@RequestMapping("/user/{id}")
 	public String handleUserByID(Model model, @PathVariable int id) {
-		model.addAttribute("sentence", "Hello userAccount with id = ");
+		model.addAttribute("sentence", "Hello user with id = ");
 		model.addAttribute("parameter", id);
 		return "template";
 	}
 
-	@RequestMapping(value = "/userAccount", params = {"name"})
+	@RequestMapping(value = "/user", params = {"name"})
 	public String handleUserByName(Model model, @RequestParam String name) {
-		model.addAttribute("sentence", "Hello userAccount with name ");
+		model.addAttribute("sentence", "Hello user with name ");
 		model.addAttribute("parameter", name);
 		return "template";
 	}
 
-	@RequestMapping(value = "/userAccount/tickets")
+	@RequestMapping(value = "/user/tickets")
 	public String handleUserTickets(Model model) {
 		model.addAttribute("sentence", "Your tickets are: ");
 		model.addAttribute("parameters", Arrays.asList("Ticket 1", "Ticket 2"));
@@ -41,7 +41,7 @@ public class FreeMarkerController {
 			model.addAttribute("error" , "Bad credentials");
 		}
 		if (logout != null) {
-			session.removeAttribute("userAccount");
+			session.removeAttribute("user");
 			model.addAttribute("message", "You have been logged out successfully");
 		}
 		return "login";

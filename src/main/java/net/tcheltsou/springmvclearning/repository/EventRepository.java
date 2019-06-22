@@ -15,21 +15,34 @@ import java.util.List;
 
 @Repository
 @Transactional(propagation = Propagation.SUPPORTS)
-public class EventRepository {
+public class EventRepository  {
 	private static final EventRowMapper EVENT_ROW_MAPPER = new EventRowMapper();
 	@Autowired
 	private DataSource dataSource;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	@Autowired
-	private TicketRepository ticketRepository;
 
 	private static final String SQL_READ_EVENTS = "SELECT id, name, date FROM event";
 	private static final String SQL_READ_EVENT = "SELECT id, name, date FROM event WHERE id = ?";
+	private static final String SQL_UPDATE_EVENT = "UPDATE event SET name = ?, date = ? WHERE id = ?";
+	private static final String SQL_DELETE_EVENT = "DELETE FROM event WHERE id = ?";
+	private static final String SQL_CREATE_EVENT = "INSERT INTO event (name, date) VALUES (?, ?)";
 
 	@Transactional(readOnly = true)
 	public List<Event> readAll() {
 		return jdbcTemplate.query(SQL_READ_EVENTS, EVENT_ROW_MAPPER);
+	}
+
+	public void update(Event event) {
+		jdbcTemplate.update(SQL_UPDATE_EVENT, event.getName(), event.getDate());
+	}
+
+	public void delete(Long id) {
+		jdbcTemplate.update(SQL_DELETE_EVENT, id);
+	}
+
+	public void create(Event event) {
+		jdbcTemplate.update(SQL_CREATE_EVENT, event.getName(), event.getDate());
 	}
 
 	@Transactional(readOnly = true)

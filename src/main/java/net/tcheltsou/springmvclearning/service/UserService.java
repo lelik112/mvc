@@ -1,18 +1,18 @@
 package net.tcheltsou.springmvclearning.service;
 
 import net.tcheltsou.springmvclearning.entity.Ticket;
-import net.tcheltsou.springmvclearning.entity.UserAccount;
+import net.tcheltsou.springmvclearning.entity.User;
 import net.tcheltsou.springmvclearning.repository.TicketRepository;
-import net.tcheltsou.springmvclearning.repository.UserAccountRepository;
+import net.tcheltsou.springmvclearning.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserAccountService {
+public class UserService {
 
 	@Autowired
-	private UserAccountRepository userAccountRepository;
+	private UserRepository userRepository;
 
 	@Autowired
 	private TicketRepository ticketRepository;
@@ -21,26 +21,26 @@ public class UserAccountService {
 	private BankService bankService;
 
 	@Transactional
-	public Ticket buyTicket(Long ticketId, UserAccount user) {
+	public Ticket buyTicket(Long ticketId, User user) {
 		Ticket ticket = ticketRepository.read(ticketId);
 		if (ticket.isSold()) {
 			throw new IllegalStateException("The ticket with id: " + ticketId + "has been already sold");
 		}
-		UserAccount userFromDs = userAccountRepository.getUserByUserName(user.getUsername());
+		User userFromDs = userRepository.getUserByUserName(user.getUsername());
 		if (userFromDs.getAmount().compareTo(ticket.getPrice()) < 0) {
 			throw new IllegalStateException("Do not have enough money");
 		}
 		ticket.setSold(true);
-		ticket.setUserAccount(user);
+		ticket.setUser(user);
 		user.setAmount(userFromDs.getAmount().subtract(ticket.getPrice()));
-		userAccountRepository.updateBalance(user);
+		userRepository.updateBalance(user);
 		ticketRepository.update(ticket);
 		bankService.addMoney(ticket.getPrice());
 		return ticket;
 	}
 
-	public UserAccount read(String  name) {
-		return userAccountRepository.getUserByUserName(name);
+	public User read(String  name) {
+		return userRepository.getUserByUserName(name);
 	}
 
 

@@ -9,6 +9,7 @@
 
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/login*" access="permitAll"/>
+        <intercept-url pattern="/ws/*" access="permitAll"/>
         <intercept-url pattern="/secured" access="hasRole('ROLE_BOOKING_MANAGER')"/>
         <intercept-url pattern="task3/balance" access="hasRole('ROLE_BOOKING_MANAGER')"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_REGISTERED_USER')"/>
