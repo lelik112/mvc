@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring.ver>5.1.5.RELEASE</spring.ver>
+        <spring.ver>5.3.19</spring.ver>
     </properties>
     <dependencies>
         <dependency>
